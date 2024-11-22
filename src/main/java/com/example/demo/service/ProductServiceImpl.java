@@ -1,51 +1,54 @@
 package com.example.demo.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+    private final ProductRepository repository;
 
-    @Autowired
-    private ProductRepository productRepository;
+    public ProductServiceImpl(ProductRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public List<Product> getAllProducts() {
-        return productRepository.findAll();
+        List<Product> products =  repository.findAll(); // SELECT * FROM products
+        System.out.println(products.toString());
+        return products;
     }
 
     @Override
     public Product getProductById(Long id) {
-        return productRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("product not found with id: " + id )); // SELECT + WHERE
     }
 
     @Override
     public Product createProduct(Product product) {
-        return productRepository.save(product);
+        System.out.println(product.getCategories());
+        return repository.save(product); // INSERT INTO
     }
 
     @Override
-    public Product updateProduct(Long id, Product productDetails) {
-        Product product = getProductById(id);
-        
-        product.setName(productDetails.getName());
-        product.setDescription(productDetails.getDescription());
-        product.setPrice(productDetails.getPrice());
-        product.setQuantity(productDetails.getQuantity());
-        
-        return productRepository.update(product);
+    public Product updateProduct(Long id, Product product) {
+        Product existProduct = getProductById(id);
+        existProduct.setName(product.getName());
+        existProduct.setPrice(product.getPrice());
+        existProduct.setQuantity(product.getQuantity());
+        existProduct.setDescription(product.getDescription());
+        return repository.save(existProduct); // SET WHERE
     }
 
     @Override
     public void deleteProduct(Long id) {
-        getProductById(id); // Check if product exists
-        productRepository.deleteById(id);
+        getProductById(id);
+        repository.deleteById(id); // DELETE by id
     }
+
 }
 
