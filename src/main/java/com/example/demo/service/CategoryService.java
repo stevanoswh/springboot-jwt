@@ -1,13 +1,14 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.example.demo.model.Category;
 
 public interface  CategoryService {
     List<Category> getAllCategories();
-    Category getCategoryById(Long id);
+    Category getCategoryById(UUID id);
     Category createCategory(Category category);
-    Category updateCategory(Long id, Category category);
-    void deleteCategory(Long id);
+    Category updateCategory(UUID id, Category category);
+    void deleteCategory(UUID id);
 }

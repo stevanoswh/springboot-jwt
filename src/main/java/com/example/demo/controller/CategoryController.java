@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,17 +36,17 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getOne(@PathVariable Long id) {
+    public ResponseEntity<Category> getOne(@PathVariable UUID id) {
         return ResponseEntity.ok(service.getCategoryById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> update(@PathVariable Long id, @RequestBody Category req) {
+    public ResponseEntity<Category> update(@PathVariable UUID id, @RequestBody Category req) {
         return ResponseEntity.ok(service.updateCategory(id, req));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.deleteCategory(id);
         return ResponseEntity.noContent().build();
     }

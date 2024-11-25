@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public Category getCategoryById(Long id) { // READ by id
+    public Category getCategoryById(UUID id) { // READ by id
         return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("not found category with id: " + id));
     }
 
@@ -32,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public Category updateCategory(Long id, Category category) {
+    public Category updateCategory(UUID id, Category category) {
         Category existCategory = getCategoryById(id);
         existCategory.setName(category.getName()); // class untuk iterate setiap field dari class yang mau diupdate, dan ganti valuenya kalo misalnya dia ada
 
@@ -40,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public void deleteCategory(Long id) {
+    public void deleteCategory(UUID id) {
         getCategoryById(id);
         repo.deleteById(id);
     }

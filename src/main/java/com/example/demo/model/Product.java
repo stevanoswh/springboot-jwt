@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -21,7 +22,7 @@ import lombok.Data;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
     private String name;
     private String description;
     private Double price;
@@ -36,6 +37,6 @@ public class Product {
     private Set<Category> categories = new HashSet<>();
 
     @ManyToOne(optional=false) 
-    @JoinColumn(name="country_id", nullable=false, updatable=false)
+    @JoinColumn(name="country_id", updatable=false)
     private Country madeIn; 
 }

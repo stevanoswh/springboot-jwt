@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(Long id) {
+    public Product getProductById(UUID id) {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("product not found with id: " + id )); // SELECT + WHERE
     }
 
@@ -35,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateProduct(Long id, Product product) {
+    public Product updateProduct(UUID id, Product product) {
         Product existProduct = getProductById(id);
         existProduct.setName(product.getName());
         existProduct.setPrice(product.getPrice());
@@ -45,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProduct(Long id) {
+    public void deleteProduct(UUID id) {
         getProductById(id);
         repository.deleteById(id); // DELETE by id
     }
